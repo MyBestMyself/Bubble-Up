@@ -184,7 +184,10 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      bubble_lower_spritesheet_0: 4563606651593568493
+      bubble_lower_spritesheet_1: 4215234537373385734
+      bubble_lower_spritesheet_2: -2745516061202032322
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

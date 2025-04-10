@@ -384,7 +384,18 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Ham_Spritesheet(5)_0: 776941924642647825
+      Ham_Spritesheet(5)_1: -2879315691613989227
+      Ham_Spritesheet(5)_10: 2601087498662378078
+      Ham_Spritesheet(5)_2: -6493832719229629027
+      Ham_Spritesheet(5)_3: -7142295093241965778
+      Ham_Spritesheet(5)_4: 541602323464340806
+      Ham_Spritesheet(5)_5: -5233128770958870143
+      Ham_Spritesheet(5)_6: 6473582818812404086
+      Ham_Spritesheet(5)_7: 7025566474764499099
+      Ham_Spritesheet(5)_8: 2003233056274975856
+      Ham_Spritesheet(5)_9: 208956023884843047
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
