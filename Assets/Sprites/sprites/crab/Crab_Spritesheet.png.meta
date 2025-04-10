@@ -109,10 +109,10 @@ TextureImporter:
       name: Crab_Spritesheet_0
       rect:
         serializedVersion: 2
-        x: 6
-        y: 54
-        width: 183
-        height: 94
+        x: 7
+        y: 55
+        width: 181
+        height: 92
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -131,10 +131,10 @@ TextureImporter:
       name: Crab_Spritesheet_1
       rect:
         serializedVersion: 2
-        x: 208
-        y: 55
-        width: 184
-        height: 95
+        x: 209
+        y: 56
+        width: 182
+        height: 93
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -153,10 +153,10 @@ TextureImporter:
       name: Crab_Spritesheet_2
       rect:
         serializedVersion: 2
-        x: 408
-        y: 53
-        width: 183
-        height: 94
+        x: 409
+        y: 54
+        width: 181
+        height: 92
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -175,7 +175,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 80a106d53e26a7a478d3b477b72fc8d3
     internalID: 0
     vertices: []
     indices: 
@@ -184,7 +184,10 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Crab_Spritesheet_0: 7229266382796932083
+      Crab_Spritesheet_1: 3303861355148451374
+      Crab_Spritesheet_2: -3929795567588803691
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
