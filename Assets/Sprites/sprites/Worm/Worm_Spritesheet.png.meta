@@ -124,10 +124,10 @@ TextureImporter:
       name: Worm_Spritesheet_0
       rect:
         serializedVersion: 2
-        x: 52
-        y: 254
-        width: 148
-        height: 227
+        x: 0
+        y: 250
+        width: 249
+        height: 249
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -146,10 +146,10 @@ TextureImporter:
       name: Worm_Spritesheet_1
       rect:
         serializedVersion: 2
-        x: 309
-        y: 254
-        width: 125
-        height: 245
+        x: 249
+        y: 250
+        width: 249
+        height: 249
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -168,10 +168,10 @@ TextureImporter:
       name: Worm_Spritesheet_2
       rect:
         serializedVersion: 2
-        x: 560
-        y: 254
-        width: 125
-        height: 242
+        x: 498
+        y: 250
+        width: 249
+        height: 249
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -190,10 +190,10 @@ TextureImporter:
       name: Worm_Spritesheet_3
       rect:
         serializedVersion: 2
-        x: 804
-        y: 254
-        width: 125
-        height: 245
+        x: 747
+        y: 250
+        width: 249
+        height: 249
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -212,10 +212,10 @@ TextureImporter:
       name: Worm_Spritesheet_4
       rect:
         serializedVersion: 2
-        x: 52
-        y: 7
-        width: 148
-        height: 112
+        x: 0
+        y: 1
+        width: 249
+        height: 249
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -234,10 +234,10 @@ TextureImporter:
       name: Worm_Spritesheet_5
       rect:
         serializedVersion: 2
-        x: 297
-        y: 6
-        width: 148
-        height: 159
+        x: 249
+        y: 1
+        width: 249
+        height: 249
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -256,10 +256,10 @@ TextureImporter:
       name: Worm_Spritesheet_6
       rect:
         serializedVersion: 2
-        x: 551
-        y: 6
-        width: 148
-        height: 194
+        x: 498
+        y: 1
+        width: 249
+        height: 249
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -278,10 +278,10 @@ TextureImporter:
       name: Worm_Spritesheet_7
       rect:
         serializedVersion: 2
-        x: 792
-        y: 7
-        width: 148
-        height: 227
+        x: 747
+        y: 1
+        width: 249
+        height: 249
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -300,7 +300,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: e56e5fd8e17ab60449b466074583310b
     internalID: 0
     vertices: []
     indices: 
