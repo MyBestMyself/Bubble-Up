@@ -3,7 +3,7 @@ using System.Collections;
 
 public class CrabBehavior : MonoBehaviour
 {
-    [SerializeField] float speed = 0.1f;
+    [SerializeField] float speed = 2f;
     Collider2D coll;
     bool flipped;
     float rayX;
@@ -33,8 +33,11 @@ public class CrabBehavior : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(new Vector2(rayX, coll.bounds.min.y), -Vector2.up, 0.5f, layerMask);
         Debug.DrawRay(new Vector2(rayX, coll.bounds.min.y), -Vector2.up * 0.5f, Color.red, 5f);
         if(hit.collider == null){
+            Debug.Log("collider is null");
             if(canFlip){
+                Flip();
                 StartCoroutine("WaitForFlip");
+                canFlip = true;
             }
         }
 
@@ -54,15 +57,13 @@ public class CrabBehavior : MonoBehaviour
             spriteRenderer.flipX = true;
             flipped = true;
         }
-        canFlip = true;
     }
 
     IEnumerator WaitForFlip(){
         canMove = false;
         canFlip = false;
-        transform.position = new Vector2(transform.position.x + speed * Time.deltaTime * -1.5f, transform.position.y);
+        transform.position = new Vector2(transform.position.x + speed * Time.deltaTime * 1.5f, transform.position.y);
         yield return new WaitForSeconds(0.5f);
-        Flip();
         canMove = true;
     }
 }
