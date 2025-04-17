@@ -55,8 +55,11 @@ public class PlayerScript : MonoBehaviour
         PopParticles2D = transform.GetChild(0).GetComponent<ParticleSystem>();
         AddParticles2D = transform.GetChild(1).GetComponent<ParticleSystem>();
         JumpParticles2D = transform.GetChild(2).GetComponent<ParticleSystem>();
+		collision_shapes = new CircleCollider2D[3];
+		collision_shapes[0] = transform.GetChild(0).GetComponent<CircleCollider2D>();
+        collision_shapes[1] = transform.GetChild(1).GetComponent<CircleCollider2D>();
+        collision_shapes[2] = transform.GetChild(2).GetComponent<CircleCollider2D>();
     }
-
 	void handle_bubble_change() {
 		//Global.bubble_count = bubble_count;
 		PopSound.Play();
@@ -66,8 +69,13 @@ public class PlayerScript : MonoBehaviour
 		//BubbleBackSprite2D.play((string)(bubble_count));
 		//BubbleFrontSprite2D.play((string)(bubble_count));
 	}
-
-	void handle_death() {
+    void Update()
+    {
+		handle_input(Time.deltaTime);
+        handle_animation(Time.deltaTime);
+		_physics_process(Time.deltaTime);
+    }
+    void handle_death() {
 		dead = true;
 		/*Global.*/bubble_count = 0;
 		Time.timeScale = 0.5f;
@@ -117,42 +125,43 @@ public class PlayerScript : MonoBehaviour
 		}
 		handle_bubble_change();
 	}
-void handle_input(float delta) {
-	float direction = Input.GetAxis("Horizontal");
-	if (direction!=0&& !invulnerable && !dead) rb.linearVelocityX = lerp(rb.linearVelocityX, direction * speed, acceleration * delta);
-	else rb.linearVelocityX = lerp(rb.linearVelocityX, 0.0f, friction * delta);
-	if (Input.GetKeyDown("bubble"))
-		pop_bubble();
-	if (Input.GetKeyDown("jump")&&!invulnerable && !dead){
-		if (is_on_floor()||coyote){
-                rb.linearVelocityY = jump_speed;
+	void handle_input(float delta) {
+		float direction = Input.GetAxis("Horizontal");
+		if (direction != 0 && !invulnerable && !dead) rb.linearVelocityX = lerp(rb.linearVelocityX, direction * speed, acceleration * delta);
+		else rb.linearVelocityX = lerp(rb.linearVelocityX, 0.0f, friction * delta);
+		if (Input.GetKeyDown(KeyCode.B))
+			pop_bubble();
+		if (Input.GetKeyDown(KeyCode.Space) && !invulnerable && !dead) {
+			if (is_on_floor() || coyote) {
+				rb.linearVelocityY = jump_speed;
 				jump_count = jump_count + 1;
 				jumping = true;
 				stretch = true;
 				JumpParticles2D.Play(); //= true;
-			JumpSound.Play();
+				JumpSound.Play();
 			}
-		else if (jump_count < 2) {
-            rb.linearVelocityY = jump_speed;
-			pop_bubble();
-			jump_count = jump_count + 1;
-			stretch = true;
-			JumpParticles2D.Play();// = true;
-			JumpSound.Play();
-		}
+			else if (jump_count < 2) {
+				rb.linearVelocityY = jump_speed;
+				pop_bubble();
+				jump_count = jump_count + 1;
+				stretch = true;
+				JumpParticles2D.Play();// = true;
+				JumpSound.Play();
+			}
 
-	if (!Input.GetButton("jump") && jumping) rb.gravityScale = base_gravity * 2.5f;
-	else rb.gravityScale = base_gravity;
-	if(!Input.GetKeyDown("jump")&& is_on_floor() &&jumping){
-		jumping = false;
-		jump_count = 0;
-		squash = true;
-	}
-	if(!is_on_floor()&& last_floor&&!jumping){
-		coyote = true;
-		CoyoteTimer.Start();
-	}
-	last_floor = is_on_floor();
+			if (!Input.GetButton("jump") && jumping) rb.gravityScale = base_gravity * 2.5f;
+			else rb.gravityScale = base_gravity;
+			if (!Input.GetKeyDown(KeyCode.Space) && is_on_floor() && jumping) {
+				jumping = false;
+				jump_count = 0;
+				squash = true;
+			}
+			if (!is_on_floor() && last_floor && !jumping) {
+				coyote = true;
+				CoyoteTimer.Start();
+			}
+			last_floor = is_on_floor();
+		}
 	}
 void handle_animation(float delta) {
 		WalkParticles2D.Stop();// = false;
@@ -168,7 +177,6 @@ void handle_animation(float delta) {
 		BubbleBackSprite2D.flipX = true;
 		BubbleFrontSprite2D.flipX = true;
 		}
-	}
 
 	if (invulnerable) AnimatedSprite2D.Play("damage");
 	else if (dead) AnimatedSprite2D.Play("dead");
@@ -220,7 +228,7 @@ void handle_animation(float delta) {
 	move_and_slide()
 	handle_animation(delta)*/
 		rb.linearVelocityY = Mathf.Min(rb.linearVelocityY, max_fall_speed);
-}
+	}
 void _on_coyote_timer_timeout() {
 	//coyote = false;
 }
