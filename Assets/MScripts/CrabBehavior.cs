@@ -7,11 +7,12 @@ public class CrabBehavior : MonoBehaviour
     Collider2D coll;
     bool flipped;
     float rayX;
-    float rayY;
     SpriteRenderer spriteRenderer;
     int layerMask;
     bool canMove = true;
     bool canFlip = true;
+    [SerializeField] ParticleSystem particles;
+    [SerializeField] ParticleSystem particlesFlipped;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -33,12 +34,28 @@ public class CrabBehavior : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(new Vector2(rayX, coll.bounds.min.y), -Vector2.up, 0.5f, layerMask);
         Debug.DrawRay(new Vector2(rayX, coll.bounds.min.y), -Vector2.up * 0.5f, Color.red, 5f);
         if(hit.collider == null){
-            Debug.Log("collider is null");
             if(canFlip){
                 Flip();
                 StartCoroutine("WaitForFlip");
                 canFlip = true;
+                
+                // if(canMove){
+                    // Debug.Log("Particles play???");
+                    // if(flipped){
+                    //     particlesFlipped.Play();
+                    // }
+                    // else{
+                    //     particles.Play();
+                    // }
+                // }
             }
+        }
+
+        if(particlesFlipped.isStopped && canMove && flipped){
+            particlesFlipped.Play();
+        }
+        else if(particles.isStopped && canMove && !flipped){
+            particles.Play();
         }
 
         if(canMove){
@@ -47,8 +64,8 @@ public class CrabBehavior : MonoBehaviour
     }
 
     void Flip(){
-        Debug.Log("Flip called");
         speed *= -1;
+        
         if(flipped){
             spriteRenderer.flipX = false;
             flipped = false;
@@ -62,8 +79,11 @@ public class CrabBehavior : MonoBehaviour
     IEnumerator WaitForFlip(){
         canMove = false;
         canFlip = false;
+        // Debug.Log("particles stopped???");
+        particles.Stop();
+        particlesFlipped.Stop();
         transform.position = new Vector2(transform.position.x + speed * Time.deltaTime * 1.5f, transform.position.y);
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(3f);
         canMove = true;
     }
 }
