@@ -109,20 +109,20 @@ TextureImporter:
       name: Crab_Spritesheet_0
       rect:
         serializedVersion: 2
-        x: 0
+        x: 7
         y: 55
-        width: 199
-        height: 145
+        width: 181
+        height: 92
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 29967b3633f673a46bde16310bb7fd99
-      internalID: -1342094553
+      spriteID: 3f3c84d0973835460800000000000000
+      internalID: 7229266382796932083
       vertices: []
       indices: 
       edges: []
@@ -131,20 +131,20 @@ TextureImporter:
       name: Crab_Spritesheet_1
       rect:
         serializedVersion: 2
-        x: 199
-        y: 55
-        width: 199
-        height: 145
+        x: 209
+        y: 56
+        width: 182
+        height: 93
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 32d23066bc7d00642848b5cfdc04389e
-      internalID: -2071341365
+      spriteID: e2e93ccd56ca9dd20800000000000000
+      internalID: 3303861355148451374
       vertices: []
       indices: 
       edges: []
@@ -153,20 +153,20 @@ TextureImporter:
       name: Crab_Spritesheet_2
       rect:
         serializedVersion: 2
-        x: 398
-        y: 55
-        width: 199
-        height: 145
+        x: 409
+        y: 54
+        width: 181
+        height: 92
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: b3b1dae06c444134dbe6fa0f9c635a2e
-      internalID: -1637983055
+      spriteID: 59bf6f190cf8679c0800000000000000
+      internalID: -3929795567588803691
       vertices: []
       indices: 
       edges: []
@@ -175,7 +175,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 1b572ac655996f943ad85a10289cdb13
+    spriteID: 80a106d53e26a7a478d3b477b72fc8d3
     internalID: 0
     vertices: []
     indices: 
@@ -185,9 +185,9 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Crab_Spritesheet_0: -1342094553
-      Crab_Spritesheet_1: -2071341365
-      Crab_Spritesheet_2: -1637983055
+      Crab_Spritesheet_0: 7229266382796932083
+      Crab_Spritesheet_1: 3303861355148451374
+      Crab_Spritesheet_2: -3929795567588803691
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
