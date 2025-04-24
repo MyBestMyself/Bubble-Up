@@ -36,7 +36,7 @@ public class PlayerScript : MonoBehaviour
     System.Timers.Timer DamageTimer;
     [SerializeField] AudioSource PopSound;
     [SerializeField] AudioSource GameOverSound;
-	Animation AnimatedSprite2D;
+	Animator AnimatedSprite2D;
     [SerializeField] SpriteRenderer BubbleBackSprite2D;
     [SerializeField] SpriteRenderer BubbleFrontSprite2D;
     ParticleSystem PopParticles2D;
@@ -47,7 +47,7 @@ public class PlayerScript : MonoBehaviour
     AudioSource JumpSound;
     void Start() {
 		//collision_shapes = [$CollisionBubble1, $CollisionBubble2, $CollisionBubble3];
-		CoyoteTimer.Interval = coyote_frames / 60.0f;
+		// CoyoteTimer.Interval = coyote_frames / 60.0f;
 		handle_bubble_change();
 		rb = GetComponent<Rigidbody2D>();
 		bubble_count = max_bubble_count;
@@ -59,13 +59,14 @@ public class PlayerScript : MonoBehaviour
 		collision_shapes[0] = transform.GetChild(0).GetComponent<CircleCollider2D>();
         collision_shapes[1] = transform.GetChild(1).GetComponent<CircleCollider2D>();
         collision_shapes[2] = transform.GetChild(2).GetComponent<CircleCollider2D>();
+		AnimatedSprite2D = GetComponent<Animator>();
     }
 	void handle_bubble_change() {
 		//Global.bubble_count = bubble_count;
 		PopSound.Play();
-		/*foreach(Collider2D c in collision_shapes)
-			c.set_deferred("disabled", true);
-		collision_shapes[bubble_count - 1].set_deferred("disabled", false);*/
+		foreach(Collider2D c in collision_shapes)
+			c.enabled = false;
+		collision_shapes[bubble_count - 1].enabled = true;
 		//BubbleBackSprite2D.play((string)(bubble_count));
 		//BubbleFrontSprite2D.play((string)(bubble_count));
 	}
@@ -88,7 +89,8 @@ public class PlayerScript : MonoBehaviour
 		GameOverSound.Play();
 		}
 
-	void handle_damage() {
+	public void handle_damage() {
+		Debug.Log("Handle Damage called");
 		if (invulnerable) return;
 		squash = true;
 		if (bubble_count > 1) {
@@ -158,7 +160,7 @@ public class PlayerScript : MonoBehaviour
 			}
 			if (!is_on_floor() && last_floor && !jumping) {
 				coyote = true;
-				CoyoteTimer.Start();
+				// CoyoteTimer.Start();
 			}
 			last_floor = is_on_floor();
 		}
