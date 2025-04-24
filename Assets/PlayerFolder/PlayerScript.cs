@@ -31,12 +31,14 @@ public class PlayerScript : MonoBehaviour
 	bool squash = false;
 	//Components added to replace children
 	Rigidbody2D rb;
-	System.Timers.Timer CoyoteTimer;
-    System.Timers.Timer DeathTimer;
-    System.Timers.Timer DamageTimer;
+	float CoyoteTimer;
+	bool death = false;
+	bool damage = false;
+    float DeathTimer = 1.5f;
+    float DamageTimer = 1f;
     [SerializeField] AudioSource PopSound;
     [SerializeField] AudioSource GameOverSound;
-	Animation AnimatedSprite2D;
+	[SerializeField] SpriteRenderer AnimatedSprite2D;
     [SerializeField] SpriteRenderer BubbleBackSprite2D;
     [SerializeField] SpriteRenderer BubbleFrontSprite2D;
     ParticleSystem PopParticles2D;
@@ -46,8 +48,7 @@ public class PlayerScript : MonoBehaviour
 	
     AudioSource JumpSound;
     void Start() {
-		//collision_shapes = [$CollisionBubble1, $CollisionBubble2, $CollisionBubble3];
-		CoyoteTimer.Interval = coyote_frames / 60.0f;
+		CoyoteTimer = coyote_frames / 60.0f;
 		handle_bubble_change();
 		rb = GetComponent<Rigidbody2D>();
 		bubble_count = max_bubble_count;
@@ -74,6 +75,31 @@ public class PlayerScript : MonoBehaviour
 		handle_input(Time.deltaTime);
         handle_animation(Time.deltaTime);
 		_physics_process(Time.deltaTime);
+		//I've decided to do timers manually
+		if (CoyoteTimer > 0&&coyote)
+		{
+			CoyoteTimer -= Time.deltaTime;
+			if (CoyoteTimer <= 0)
+			{
+				_on_coyote_timer_timeout();
+			}
+		}
+		if (DeathTimer > 0&&death) { 
+			DeathTimer -= Time.deltaTime;
+			if (DeathTimer <= 0)
+			{
+				_on_death_timer_timeout();
+				DeathTimer = 1.5f;
+			}
+        }
+		if (DamageTimer > 0&&damage) {
+			DamageTimer -= Time.deltaTime;
+			if (DamageTimer <= 0)
+			{
+				_on_damage_timer_timeout();
+				DamageTimer = 1f;
+			}
+        }
     }
     void handle_death() {
 		dead = true;
@@ -83,8 +109,7 @@ public class PlayerScript : MonoBehaviour
 			c.set_deferred("disabled", true);
 		BubbleBackSprite2D.set_deferred("visible", false);
 		BubbleFrontSprite2D.set_deferred("visible", false);*/
-		DeathTimer.Interval = 1.5f;
-		DeathTimer.Start();
+		DeathTimer = 1.5f;
 		GameOverSound.Play();
 		}
 
@@ -97,7 +122,7 @@ public class PlayerScript : MonoBehaviour
             rb.linearVelocityY = jump_speed * 0.5f;
 			if (rb.linearVelocityX > 0) rb.linearVelocityX = -speed * 4f;
 			else rb.linearVelocityX = speed * 4f;
-			DamageTimer.Start();
+			damage=true;
 		}
 		else {
 			rb.linearVelocityY = jump_speed;
@@ -158,7 +183,6 @@ public class PlayerScript : MonoBehaviour
 			}
 			if (!is_on_floor() && last_floor && !jumping) {
 				coyote = true;
-				CoyoteTimer.Start();
 			}
 			last_floor = is_on_floor();
 		}
@@ -178,22 +202,28 @@ void handle_animation(float delta) {
 		BubbleFrontSprite2D.flipX = true;
 		}
 
-	if (invulnerable) AnimatedSprite2D.Play("damage");
-	else if (dead) AnimatedSprite2D.Play("dead");
+	if (invulnerable) { } //AnimatedSprite2D.sprite = ("damage");
+	else if (dead) { } //AnimatedSprite2D.sprite = ("dead");
 	else if (is_on_floor() && !jumping) {
-			if (Input.GetAxis("Horizontal") == 0f) {
-				AnimatedSprite2D.Play("run");
-				WalkParticles2D.Play();// = true;
+		if (Input.GetAxis("Horizontal") == 0f)
+			{
+							//AnimatedSprite2D.sprite = ("run");
+							WalkParticles2D.Play();// = true;
 			}
-			else AnimatedSprite2D.Play("idle");
+		else
+			{//AnimatedSprite2D.sprite = ("idle");
+			}
 		}
-		else {
-			if (rb.linearVelocityY < 0) {
-				if (jump_count < 2)AnimatedSprite2D.Play("up");
-			else AnimatedSprite2D.Play("upup");
+	else {
+		if (rb.linearVelocityY < 0) {
+			if (jump_count < 2)
+				{//AnimatedSprite2D.sprite = ("up");
+				}
+			else
+				{//AnimatedSprite2D.Play("upup");
+				}
 			}
-			else {
-			AnimatedSprite2D.Play("down");
+		else { //AnimatedSprite2D.sprite = ("down");
 				stretch = false;
 			}
 		}
@@ -212,15 +242,18 @@ void handle_animation(float delta) {
 		JumpParticles2D.Play();// = true;
 		squash = false;
 		}
-	//idk what this does nor how to fix so I commented it out 
-	/*
-	AnimatedSprite2D.scale.x = move_toward(AnimatedSprite2D.scale.x, 1, delta * 3);
-	AnimatedSprite2D.scale.y = move_toward(AnimatedSprite2D.scale.y, 1, delta * 3);
-	BubbleBackSprite2D.scale.x = move_toward(BubbleBackSprite2D.scale.x, 1, delta * 3);
-	BubbleBackSprite2D.scale.y = move_toward(BubbleBackSprite2D.scale.y, 1, delta * 3);
-	BubbleFrontSprite2D.scale.x = move_toward(BubbleFrontSprite2D.scale.x, 1, delta * 3);
-	BubbleFrontSprite2D.scale.y = move_toward(BubbleFrontSprite2D.scale.y, 1, delta * 3);*/
-	}
+        //idk what this does nor how to fix so I commented it out 
+        /*
+		AnimatedSprite2D.scale.x = move_toward(AnimatedSprite2D.scale.x, 1, delta * 3);
+		AnimatedSprite2D.scale.y = move_toward(AnimatedSprite2D.scale.y, 1, delta * 3);
+		BubbleBackSprite2D.scale.x = move_toward(BubbleBackSprite2D.scale.x, 1, delta * 3);
+		BubbleBackSprite2D.scale.y = move_toward(BubbleBackSprite2D.scale.y, 1, delta * 3);
+		BubbleFrontSprite2D.scale.x = move_toward(BubbleBackSprite2D.scale.x, 1, delta * 3);
+		BubbleFrontSprite2D.scale.y = move_toward(BubbleFrontSprite2D.scale.y, 1, delta * 3);*/
+        AnimatedSprite2D.size = moveToOne(AnimatedSprite2D.size.x, AnimatedSprite2D.size.y);
+        BubbleBackSprite2D.size = moveToOne(BubbleBackSprite2D.size.x, BubbleBackSprite2D.size.y);
+        BubbleFrontSprite2D.size = moveToOne(BubbleFrontSprite2D.size.x, BubbleFrontSprite2D.size.y);
+    }
 	void _physics_process(float delta) {
 		/*velocity.y += gravity * delta
 	velocity.y = min(velocity.y, max_fall_speed)
@@ -230,7 +263,7 @@ void handle_animation(float delta) {
 		rb.linearVelocityY = Mathf.Min(rb.linearVelocityY, max_fall_speed);
 	}
 void _on_coyote_timer_timeout() {
-	//coyote = false;
+	coyote = false;
 }
 
 void _on_damage_timer_timeout() {
@@ -249,4 +282,14 @@ float lerp(float a, float b, float p)
 	{
 		return rb.linearVelocityY == 0;
 	}
+	Vector2 moveToOne(float x, float y)
+	{
+		if (x - 3 * Time.deltaTime > 1) x -= 3 * Time.deltaTime;
+		else if (x + 3 * Time.deltaTime < 1) x += 3 * Time.deltaTime;
+		else x = 1;
+        if (y - 3 * Time.deltaTime > 1) y -= 3 * Time.deltaTime;
+        else if (y + 3 * Time.deltaTime < 1) y += 3 * Time.deltaTime;
+        else y = 1;
+		return new Vector2(x, y);
+    }
 }
