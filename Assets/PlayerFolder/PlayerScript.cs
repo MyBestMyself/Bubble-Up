@@ -38,6 +38,7 @@ public class PlayerScript : MonoBehaviour
     float DamageTimer = 1f;
     [SerializeField] AudioSource PopSound;
     [SerializeField] AudioSource GameOverSound;
+	[SerializeField] AudioSource JumpSound;
 	[SerializeField] Animator AnimatedSprite2D;
     [SerializeField] SpriteRenderer BubbleBackSprite2D;
     [SerializeField] SpriteRenderer BubbleFrontSprite2D;
@@ -46,16 +47,16 @@ public class PlayerScript : MonoBehaviour
     ParticleSystem WalkParticles2D;
     ParticleSystem JumpParticles2D;
 	
-    AudioSource JumpSound;
+    
     void Start() {
 		CoyoteTimer = coyote_frames / 60.0f;
 		handle_bubble_change();
 		rb = GetComponent<Rigidbody2D>();
 		bubble_count = max_bubble_count;
 		WalkParticles2D =  GetComponent<ParticleSystem>();
-        PopParticles2D = transform.GetChild(0).GetComponent<ParticleSystem>();
-        AddParticles2D = transform.GetChild(1).GetComponent<ParticleSystem>();
-        JumpParticles2D = transform.GetChild(2).GetComponent<ParticleSystem>();
+        PopParticles2D = transform.GetChild(3).GetComponent<ParticleSystem>();
+        AddParticles2D = transform.GetChild(4).GetComponent<ParticleSystem>();
+        JumpParticles2D = transform.GetChild(5).GetComponent<ParticleSystem>();
 		collision_shapes = new CircleCollider2D[3];
 		collision_shapes[0] = transform.GetChild(0).GetComponent<CircleCollider2D>();
         collision_shapes[1] = transform.GetChild(1).GetComponent<CircleCollider2D>();
@@ -175,7 +176,7 @@ public class PlayerScript : MonoBehaviour
 				JumpSound.Play();
 			}
 
-			if (!Input.GetButton("jump") && jumping) rb.gravityScale = base_gravity * 2.5f;
+			if (!Input.GetButton("Jump") && jumping) rb.gravityScale = base_gravity * 2.5f;
 			else rb.gravityScale = base_gravity;
 			if (!Input.GetKeyDown(KeyCode.Space) && is_on_floor() && jumping) {
 				jumping = false;
@@ -189,39 +190,39 @@ public class PlayerScript : MonoBehaviour
 		}
 	}
 void handle_animation(float delta) {
-		WalkParticles2D.Stop();// = false;
-		if (rb.linearVelocityX > 0 && !dead && !invulnerable) { 
+	WalkParticles2D.Stop();// = false;
+	if (rb.linearVelocityX > 0 && !dead && !invulnerable) { 
 		//AnimatedSprite2D.flipX = false;
 		BubbleBackSprite2D.flipX = false;
 		BubbleFrontSprite2D.flipX = false;
-		}
+	}
 
 
-		if (rb.linearVelocityX < 0 && !dead && !invulnerable) {
+	if (rb.linearVelocityX < 0 && !dead && !invulnerable) {
 		//AnimatedSprite2D.flipX = true;
 		BubbleBackSprite2D.flipX = true;
 		BubbleFrontSprite2D.flipX = true;
-		}
+	}
 
 	if (invulnerable) AnimatedSprite2D.Play("damage");
 	else if (dead) AnimatedSprite2D.Play("dead");
 	else if (is_on_floor() && !jumping) {
-			if (Input.GetAxis("Horizontal") == 0f) {
-				AnimatedSprite2D.Play("run");
-				WalkParticles2D.Play();// = true;
-			}
-			else AnimatedSprite2D.Play("idle");
+		if (Input.GetAxis("Horizontal") == 0f) {
+			AnimatedSprite2D.Play("run");
+			WalkParticles2D.Play();// = true;
+		}
+		else AnimatedSprite2D.Play("idle");
+	}
+	else {
+		if (rb.linearVelocityY < 0) {
+			if (jump_count < 2)AnimatedSprite2D.Play("up");
+			else AnimatedSprite2D.Play("upup");
 		}
 		else {
-			if (rb.linearVelocityY < 0) {
-				if (jump_count < 2)AnimatedSprite2D.Play("up");
-			else AnimatedSprite2D.Play("upup");
-			}
-			else {
 			AnimatedSprite2D.Play("down");
-				stretch = false;
-			}
+			stretch = false;
 		}
+	}
 
 	if (stretch) {
 		AnimatedSprite2D.GetComponent<Transform>().localScale = new Vector3(0.9f, 1.1f, 1);
