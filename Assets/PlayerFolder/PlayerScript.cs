@@ -7,7 +7,7 @@ using Unity.VisualScripting;
 
 public class PlayerScript : MonoBehaviour
 {
-	public float speed = 5;
+	public float speed = 0.5f;
 	public float jump_speed = -8;
 	public float acceleration = .8f;
 	public float friction = 0.20f;
@@ -40,6 +40,7 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] AudioSource GameOverSound;
 	[SerializeField] AudioSource JumpSound;
 	[SerializeField] Animator AnimatedSprite2D;
+	[SerializeField] SpriteRenderer PlayerSprite;
     [SerializeField] SpriteRenderer BubbleBackSprite2D;
     [SerializeField] SpriteRenderer BubbleFrontSprite2D;
     ParticleSystem PopParticles2D;
@@ -66,11 +67,16 @@ public class PlayerScript : MonoBehaviour
 	void handle_bubble_change() {
 		//Global.bubble_count = bubble_count;
 		PopSound.Play();
-		foreach(Collider2D c in collision_shapes)
+		foreach(Collider2D c in collision_shapes){
 			c.enabled = false;
+			c.gameObject.GetComponent<SpriteRenderer>().enabled = false;
+			// c.gameObject.GetComponent<SpriteRenderer>().enabled = false;	//Replace this with the solution for back/front
+		}
 		collision_shapes[bubble_count - 1].enabled = true;
-		//BubbleBackSprite2D.play((string)(bubble_count));
-		//BubbleFrontSprite2D.play((string)(bubble_count));
+		BubbleBackSprite2D = collision_shapes[bubble_count - 1].gameObject.GetComponent<SpriteRenderer>();
+		BubbleFrontSprite2D = collision_shapes[bubble_count - 1].gameObject.GetComponent<SpriteRenderer>();
+		BubbleBackSprite2D.enabled = true;
+		BubbleFrontSprite2D.enabled = true;
 	}
     void Update()
     {
@@ -122,8 +128,8 @@ public class PlayerScript : MonoBehaviour
 			pop_bubble();
 			invulnerable = true;
             rb.linearVelocityY = jump_speed * 0.5f;
-			if (rb.linearVelocityX > 0) rb.linearVelocityX = -speed * 4f;
-			else rb.linearVelocityX = speed * 4f;
+			if (rb.linearVelocityX > 0) rb.linearVelocityX = -speed * 1f;
+			else rb.linearVelocityX = speed * 1f;
 			damage=true;
 		}
 		else {
@@ -192,14 +198,14 @@ public class PlayerScript : MonoBehaviour
 void handle_animation(float delta) {
 	WalkParticles2D.Stop();// = false;
 	if (rb.linearVelocityX > 0 && !dead && !invulnerable) { 
-		//AnimatedSprite2D.flipX = false;
+		PlayerSprite.flipX = false;
 		BubbleBackSprite2D.flipX = false;
 		BubbleFrontSprite2D.flipX = false;
 	}
 
 
 	if (rb.linearVelocityX < 0 && !dead && !invulnerable) {
-		//AnimatedSprite2D.flipX = true;
+		PlayerSprite.flipX = true;
 		BubbleBackSprite2D.flipX = true;
 		BubbleFrontSprite2D.flipX = true;
 	}
@@ -225,14 +231,14 @@ void handle_animation(float delta) {
 	}
 
 	if (stretch) {
-		AnimatedSprite2D.GetComponent<Transform>().localScale = new Vector3(0.9f, 1.1f, 1);
+		PlayerSprite.GetComponent<Transform>().localScale = new Vector3(0.9f, 1.1f, 1);
 		BubbleBackSprite2D.GetComponent<Transform>().localScale = new Vector3(0.9f, 1.1f, 1);
 		BubbleFrontSprite2D.GetComponent<Transform>().localScale = new Vector3(0.9f, 1.1f, 1);
 		}
 
 
 	if (squash) {
-		AnimatedSprite2D.GetComponent<Transform>().localScale = new Vector3(1.3f, 0.9f,1f);
+		PlayerSprite.GetComponent<Transform>().localScale = new Vector3(1.3f, 0.9f,1f);
 		BubbleBackSprite2D.GetComponent<Transform>().localScale = new Vector3(1.3f, 0.9f,1f);
 		BubbleFrontSprite2D.GetComponent<Transform>().localScale = new Vector3(1.3f, 0.9f,1f);
 		JumpParticles2D.Play();// = true;
@@ -247,8 +253,13 @@ void handle_animation(float delta) {
 		BubbleFrontSprite2D.scale.x = move_toward(BubbleBackSprite2D.scale.x, 1, delta * 3);
 		BubbleFrontSprite2D.scale.y = move_toward(BubbleFrontSprite2D.scale.y, 1, delta * 3);*/
         // AnimatedSprite2D.size = moveToOne(AnimatedSprite2D.size.x, AnimatedSprite2D.size.y);
-        BubbleBackSprite2D.size = moveToOne(BubbleBackSprite2D.size.x, BubbleBackSprite2D.size.y);
-        BubbleFrontSprite2D.size = moveToOne(BubbleFrontSprite2D.size.x, BubbleFrontSprite2D.size.y);
+		Vector3 BubbleBackSpriteScale = BubbleBackSprite2D.GetComponent<Transform>().localScale;
+		Vector3 BubbleFrontSpriteScale = BubbleFrontSprite2D.GetComponent<Transform>().localScale;
+		Vector3 PlayerSpriteScale = PlayerSprite.GetComponent<Transform>().localScale;
+
+        BubbleBackSprite2D.GetComponent<Transform>().localScale = moveToOne(BubbleBackSpriteScale.x, BubbleBackSpriteScale.y);
+        BubbleFrontSprite2D.GetComponent<Transform>().localScale = moveToOne(BubbleFrontSpriteScale.x, BubbleFrontSpriteScale.y);
+		PlayerSprite.GetComponent<Transform>().localScale = moveToOne(PlayerSpriteScale.x, PlayerSpriteScale.y);
     }
 	void _physics_process(float delta) {
 		/*velocity.y += gravity * delta
