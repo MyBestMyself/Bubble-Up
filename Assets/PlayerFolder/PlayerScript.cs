@@ -7,7 +7,7 @@ using Unity.VisualScripting;
 
 public class PlayerScript : MonoBehaviour
 {
-	public float speed = 0.5f;
+	public float speed = 5;
 	public float jump_speed = -8;
 	public float acceleration = .8f;
 	public float friction = 0.20f;
@@ -20,7 +20,7 @@ public class PlayerScript : MonoBehaviour
 	int jump_count = 0;
 
 	/*var gravity = base_gravity*/
-	float max_fall_speed = 10;
+	float max_fall_speed = -10;
 	int coyote_frames = 5;
 	bool coyote = false;
 	bool last_floor = false;
@@ -113,10 +113,10 @@ public class PlayerScript : MonoBehaviour
 		dead = true;
 		/*Global.*/bubble_count = 0;
 		Time.timeScale = 0.5f;
-		/*foreach(Collider2D c in collision_shapes)
-			c.set_deferred("disabled", true);
-		BubbleBackSprite2D.set_deferred("visible", false);
-		BubbleFrontSprite2D.set_deferred("visible", false);*/
+		foreach(Collider2D c in collision_shapes)
+			c.enabled = false;
+		BubbleBackSprite2D.enabled = false;
+		BubbleFrontSprite2D.enabled = false;
 		DeathTimer = 1.5f;
 		GameOverSound.Play();
 		}
@@ -134,8 +134,8 @@ public class PlayerScript : MonoBehaviour
 		}
 		else {
 			rb.linearVelocityY = jump_speed;
-			if (rb.linearVelocityX > 0) rb.linearVelocityX = -speed * 4;
-			else rb.linearVelocityX = speed * 4;
+			if (rb.linearVelocityX > 0) rb.linearVelocityX = -speed * 1f;
+			else rb.linearVelocityX = speed * 1f;
 			handle_death();
 		}
 	}
@@ -181,19 +181,19 @@ public class PlayerScript : MonoBehaviour
 				JumpParticles2D.Play();// = true;
 				JumpSound.Play();
 			}
-
-			if (!Input.GetButton("Jump") && jumping) rb.gravityScale = base_gravity * 2.5f;
-			else rb.gravityScale = base_gravity;
-			if (!Input.GetKeyDown(KeyCode.Space) && is_on_floor() && jumping) {
-				jumping = false;
-				jump_count = 0;
-				squash = true;
-			}
-			if (!is_on_floor() && last_floor && !jumping) {
-				coyote = true;
-			}
-			last_floor = is_on_floor();
 		}
+		if (!Input.GetButton("Jump") && jumping) rb.gravityScale = base_gravity * 2.5f;
+		else rb.gravityScale = base_gravity;
+		if (!Input.GetKeyDown(KeyCode.Space) && is_on_floor() && jumping) {
+			Debug.Log("Jumping is now false");
+			jumping = false;
+			jump_count = 0;
+			squash = true;
+		}
+		if (!is_on_floor() && last_floor && !jumping) {
+			coyote = true; 
+		}
+		last_floor = is_on_floor();
 	}
 void handle_animation(float delta) {
 	WalkParticles2D.Stop();// = false;
@@ -213,14 +213,14 @@ void handle_animation(float delta) {
 	if (invulnerable) AnimatedSprite2D.Play("damage");
 	else if (dead) AnimatedSprite2D.Play("dead");
 	else if (is_on_floor() && !jumping) {
-		if (Input.GetAxis("Horizontal") == 0f) {
+		if (Input.GetAxis("Horizontal") != 0f) {
 			AnimatedSprite2D.Play("run");
 			WalkParticles2D.Play();// = true;
 		}
 		else AnimatedSprite2D.Play("idle");
 	}
 	else {
-		if (rb.linearVelocityY < 0) {
+		if (rb.linearVelocityY > 0) {
 			if (jump_count < 2)AnimatedSprite2D.Play("up");
 			else AnimatedSprite2D.Play("upup");
 		}
@@ -267,7 +267,7 @@ void handle_animation(float delta) {
 	handle_input(delta)
 	move_and_slide()
 	handle_animation(delta)*/
-		rb.linearVelocityY = Mathf.Min(rb.linearVelocityY, max_fall_speed);
+		rb.linearVelocityY = Mathf.Max(rb.linearVelocityY, max_fall_speed);
 	}
 void _on_coyote_timer_timeout() {
 	coyote = false;
@@ -283,6 +283,7 @@ void _on_death_timer_timeout() {
 	}
 float lerp(float a, float b, float p)
 	{
+		Debug.Log(a + (b - a) * p);
 		return a + (b - a) * p;
 	}
 	bool is_on_floor()
