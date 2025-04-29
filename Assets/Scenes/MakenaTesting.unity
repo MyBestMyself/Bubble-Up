@@ -176,25 +176,10 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 90ff0157ea602b74d81b3644d20c191b, type: 3}
---- !u!58 &136478324 stripped
-CircleCollider2D:
-  m_CorrespondingSourceObject: {fileID: 5149920452088818928, guid: 1c1ca768a2ddbba4e943b7670c02d64f, type: 3}
-  m_PrefabInstance: {fileID: 1490071960}
-  m_PrefabAsset: {fileID: 0}
 --- !u!82 &175661117 stripped
 AudioSource:
   m_CorrespondingSourceObject: {fileID: 396321255794085453, guid: b3e3f8aac0b3ca04d8f838ca643135c9, type: 3}
   m_PrefabInstance: {fileID: 1133985740}
-  m_PrefabAsset: {fileID: 0}
---- !u!212 &355457336 stripped
-SpriteRenderer:
-  m_CorrespondingSourceObject: {fileID: 3177733599701982883, guid: 1c1ca768a2ddbba4e943b7670c02d64f, type: 3}
-  m_PrefabInstance: {fileID: 1490071960}
-  m_PrefabAsset: {fileID: 0}
---- !u!58 &355457338 stripped
-CircleCollider2D:
-  m_CorrespondingSourceObject: {fileID: 9139295604453503850, guid: 1c1ca768a2ddbba4e943b7670c02d64f, type: 3}
-  m_PrefabInstance: {fileID: 1490071960}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &660792098
 GameObject:
@@ -494,11 +479,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 17bcd5d385c711e4e87bdf595dad945b, type: 3}
---- !u!58 &1436766879 stripped
-CircleCollider2D:
-  m_CorrespondingSourceObject: {fileID: 9147448859076840768, guid: 1c1ca768a2ddbba4e943b7670c02d64f, type: 3}
-  m_PrefabInstance: {fileID: 1490071960}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1490071960
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -507,25 +487,77 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 944592957441059017, guid: 1c1ca768a2ddbba4e943b7670c02d64f, type: 3}
-      propertyPath: m_Enabled
+    - target: {fileID: 228584241794659510, guid: 1c1ca768a2ddbba4e943b7670c02d64f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 320179800350958332, guid: 1c1ca768a2ddbba4e943b7670c02d64f, type: 3}
+      propertyPath: playOnAwake
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 320179800350958332, guid: 1c1ca768a2ddbba4e943b7670c02d64f, type: 3}
+      propertyPath: ShapeModule.m_Position.y
+      value: -0.32
+      objectReference: {fileID: 0}
+    - target: {fileID: 320179800350958332, guid: 1c1ca768a2ddbba4e943b7670c02d64f, type: 3}
+      propertyPath: VelocityModule.inWorldSpace
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 320179800350958332, guid: 1c1ca768a2ddbba4e943b7670c02d64f, type: 3}
+      propertyPath: EmissionModule.m_Bursts.Array.data[0].countCurve.maxCurve.m_Curve.Array.data[0].inWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 320179800350958332, guid: 1c1ca768a2ddbba4e943b7670c02d64f, type: 3}
+      propertyPath: EmissionModule.m_Bursts.Array.data[0].countCurve.maxCurve.m_Curve.Array.data[1].inWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 320179800350958332, guid: 1c1ca768a2ddbba4e943b7670c02d64f, type: 3}
+      propertyPath: EmissionModule.m_Bursts.Array.data[0].countCurve.minCurve.m_Curve.Array.data[0].inWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 320179800350958332, guid: 1c1ca768a2ddbba4e943b7670c02d64f, type: 3}
+      propertyPath: EmissionModule.m_Bursts.Array.data[0].countCurve.minCurve.m_Curve.Array.data[1].inWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 320179800350958332, guid: 1c1ca768a2ddbba4e943b7670c02d64f, type: 3}
+      propertyPath: EmissionModule.m_Bursts.Array.data[0].countCurve.maxCurve.m_Curve.Array.data[0].outWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 320179800350958332, guid: 1c1ca768a2ddbba4e943b7670c02d64f, type: 3}
+      propertyPath: EmissionModule.m_Bursts.Array.data[0].countCurve.maxCurve.m_Curve.Array.data[1].outWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 320179800350958332, guid: 1c1ca768a2ddbba4e943b7670c02d64f, type: 3}
+      propertyPath: EmissionModule.m_Bursts.Array.data[0].countCurve.minCurve.m_Curve.Array.data[0].outWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 320179800350958332, guid: 1c1ca768a2ddbba4e943b7670c02d64f, type: 3}
+      propertyPath: EmissionModule.m_Bursts.Array.data[0].countCurve.minCurve.m_Curve.Array.data[1].outWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 1815814321332270149, guid: 1c1ca768a2ddbba4e943b7670c02d64f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2167931239792062792, guid: 1c1ca768a2ddbba4e943b7670c02d64f, type: 3}
       propertyPath: m_Name
       value: MakenaPlayer
       objectReference: {fileID: 0}
-    - target: {fileID: 2189643115789456377, guid: 1c1ca768a2ddbba4e943b7670c02d64f, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 2400824281188344446, guid: 1c1ca768a2ddbba4e943b7670c02d64f, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3177733599701982883, guid: 1c1ca768a2ddbba4e943b7670c02d64f, type: 3}
-      propertyPath: m_Enabled
+    - target: {fileID: 2213983124226112270, guid: 1c1ca768a2ddbba4e943b7670c02d64f, type: 3}
+      propertyPath: playOnAwake
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3777087926634533409, guid: 1c1ca768a2ddbba4e943b7670c02d64f, type: 3}
+      propertyPath: playOnAwake
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4086402517460508380, guid: 1c1ca768a2ddbba4e943b7670c02d64f, type: 3}
+      propertyPath: playOnAwake
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4893174181967256863, guid: 1c1ca768a2ddbba4e943b7670c02d64f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5154174059901936289, guid: 1c1ca768a2ddbba4e943b7670c02d64f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -567,10 +599,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5628494475745290376, guid: 1c1ca768a2ddbba4e943b7670c02d64f, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.5
-      objectReference: {fileID: 0}
+    - target: {fileID: 5366565643160106460, guid: 1c1ca768a2ddbba4e943b7670c02d64f, type: 3}
+      propertyPath: PopSound
+      value: 
+      objectReference: {fileID: 175661117}
+    - target: {fileID: 5366565643160106460, guid: 1c1ca768a2ddbba4e943b7670c02d64f, type: 3}
+      propertyPath: JumpSound
+      value: 
+      objectReference: {fileID: 1886083041}
+    - target: {fileID: 5366565643160106460, guid: 1c1ca768a2ddbba4e943b7670c02d64f, type: 3}
+      propertyPath: GameOverSound
+      value: 
+      objectReference: {fileID: 1109906707}
+    - target: {fileID: 5366565643160106460, guid: 1c1ca768a2ddbba4e943b7670c02d64f, type: 3}
+      propertyPath: WalkParticles2D
+      value: 
+      objectReference: {fileID: 1659201502}
     - target: {fileID: 8109682508302041966, guid: 1c1ca768a2ddbba4e943b7670c02d64f, type: 3}
       propertyPath: PopSound
       value: 
@@ -580,77 +624,19 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1886083041}
     - target: {fileID: 8109682508302041966, guid: 1c1ca768a2ddbba4e943b7670c02d64f, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8109682508302041966, guid: 1c1ca768a2ddbba4e943b7670c02d64f, type: 3}
-      propertyPath: jump_speed
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 8109682508302041966, guid: 1c1ca768a2ddbba4e943b7670c02d64f, type: 3}
-      propertyPath: PlayerSprite
-      value: 
-      objectReference: {fileID: 1529925535}
-    - target: {fileID: 8109682508302041966, guid: 1c1ca768a2ddbba4e943b7670c02d64f, type: 3}
-      propertyPath: acceleration
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 8109682508302041966, guid: 1c1ca768a2ddbba4e943b7670c02d64f, type: 3}
-      propertyPath: base_gravity
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8109682508302041966, guid: 1c1ca768a2ddbba4e943b7670c02d64f, type: 3}
       propertyPath: GameOverSound
       value: 
       objectReference: {fileID: 1109906707}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 2167931239792062792, guid: 1c1ca768a2ddbba4e943b7670c02d64f, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1529925539}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1c1ca768a2ddbba4e943b7670c02d64f, type: 3}
---- !u!1 &1529925530 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2167931239792062792, guid: 1c1ca768a2ddbba4e943b7670c02d64f, type: 3}
+--- !u!198 &1659201502 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 320179800350958332, guid: 1c1ca768a2ddbba4e943b7670c02d64f, type: 3}
   m_PrefabInstance: {fileID: 1490071960}
   m_PrefabAsset: {fileID: 0}
---- !u!212 &1529925535 stripped
-SpriteRenderer:
-  m_CorrespondingSourceObject: {fileID: 6045323646553978226, guid: 1c1ca768a2ddbba4e943b7670c02d64f, type: 3}
-  m_PrefabInstance: {fileID: 1490071960}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1529925539
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1529925530}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 89b399ada1e26b247b92a806b95da3de, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 5
-  jump_speed: 20
-  acceleration: 8
-  friction: 0.2
-  base_gravity: 5
-  max_bubble_count: 3
-  bubble_count: 3
-  collision_shapes:
-  - {fileID: 355457338}
-  - {fileID: 1436766879}
-  - {fileID: 136478324}
-  PopSound: {fileID: 175661117}
-  GameOverSound: {fileID: 1109906707}
-  JumpSound: {fileID: 1886083041}
-  AnimatedSprite2D: {fileID: 0}
-  PlayerSprite: {fileID: 1529925535}
-  BubbleBackSprite2D: {fileID: 355457336}
-  BubbleFrontSprite2D: {fileID: 355457336}
 --- !u!1 &1750376248
 GameObject:
   m_ObjectHideFlags: 0

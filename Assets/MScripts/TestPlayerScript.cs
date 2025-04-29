@@ -45,7 +45,7 @@ public class TestPlayerScript : MonoBehaviour
     [SerializeField] SpriteRenderer BubbleFrontSprite2D;
     ParticleSystem PopParticles2D;
     ParticleSystem AddParticles2D;
-    ParticleSystem WalkParticles2D;
+    [SerializeField] ParticleSystem WalkParticles2D;
     ParticleSystem JumpParticles2D;
 	
     
@@ -54,7 +54,7 @@ public class TestPlayerScript : MonoBehaviour
 		handle_bubble_change();
 		rb = GetComponent<Rigidbody2D>();
 		bubble_count = max_bubble_count;
-		WalkParticles2D =  GetComponent<ParticleSystem>();
+		WalkParticles2D =  gameObject.GetComponent<ParticleSystem>();
         PopParticles2D = transform.GetChild(3).GetComponent<ParticleSystem>();
         AddParticles2D = transform.GetChild(4).GetComponent<ParticleSystem>();
         JumpParticles2D = transform.GetChild(5).GetComponent<ParticleSystem>();
@@ -140,6 +140,7 @@ public class TestPlayerScript : MonoBehaviour
 		}
 	}
 	void pop_bubble() {
+		Debug.Log("Pop bubble called");
 		PopParticles2D.Play();// = true;
 		bubble_count -= 1;
 		if (bubble_count < 1) {
@@ -195,7 +196,10 @@ public class TestPlayerScript : MonoBehaviour
 		last_floor = is_on_floor();
 	}
 void handle_animation(float delta) {
-	WalkParticles2D.Stop();// = false;
+	if (Input.GetAxis("Horizontal") == 0f) {
+			WalkParticles2D.Stop();// = true;
+		}
+	// WalkParticles2D.Stop();// = false;
 	if (rb.linearVelocityX > 0 && !dead && !invulnerable) { 
 		PlayerSprite.flipX = false;
 		BubbleBackSprite2D.flipX = false;
@@ -211,9 +215,10 @@ void handle_animation(float delta) {
 
 	if (invulnerable) AnimatedSprite2D.Play("damage");
 	else if (dead) AnimatedSprite2D.Play("dead");
-	else if (is_on_floor() && !jumping) {
+	else if (is_on_floor()) {	// && !jumping
 		if (Input.GetAxis("Horizontal") != 0f) {
 			AnimatedSprite2D.Play("run");
+			Debug.Log(WalkParticles2D.gameObject.name);
 			WalkParticles2D.Play();// = true;
 		}
 		else AnimatedSprite2D.Play("idle");
