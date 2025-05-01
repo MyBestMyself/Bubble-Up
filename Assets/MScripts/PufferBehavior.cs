@@ -5,6 +5,7 @@ using UnityEditor.Animations;
 
 public class PufferBehavior : MonoBehaviour
 {
+    [SerializeField] ParticleSystem particles;
     CircleCollider2D circCollider;
     SpriteRenderer spriteRenderer;
     bool isInflated;
@@ -45,7 +46,12 @@ public class PufferBehavior : MonoBehaviour
 
     IEnumerator StartAnimation(){
         UpdateCollider();
+        PlayParticles();
         yield return new WaitForSeconds(waitTime + 1);
         animator.SetBool("IsInflated", isInflated);
+    }
+
+    void PlayParticles(){
+        particles.Play();
     }
 }

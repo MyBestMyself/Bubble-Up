@@ -4846,6 +4846,7 @@ GameObject:
   - component: {fileID: 4757167717101457693}
   - component: {fileID: 3309076030918140122}
   - component: {fileID: 5301869022387725535}
+  - component: {fileID: 4472800549903287694}
   m_Layer: 0
   m_Name: Worm
   m_TagString: Untagged
@@ -5005,3 +5006,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   particles: {fileID: 4306030577772457994}
+--- !u!114 &4472800549903287694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1738574668707720725}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35d31e17f68a9f649b72b9b628545c5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
