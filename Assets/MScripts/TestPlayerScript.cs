@@ -150,7 +150,7 @@ public class TestPlayerScript : MonoBehaviour
 		handle_bubble_change();
 	}
 
-	void add_bubble() {
+	public void add_bubble() {
 		AddParticles2D.Play();// = true;
 		bubble_count += 1;
 		if (bubble_count > 3) {
@@ -218,7 +218,6 @@ void handle_animation(float delta) {
 	else if (is_on_floor()) {	// && !jumping
 		if (Input.GetAxis("Horizontal") != 0f) {
 			AnimatedSprite2D.Play("run");
-			Debug.Log(WalkParticles2D.gameObject.name);
 			WalkParticles2D.Play();// = true;
 		}
 		else AnimatedSprite2D.Play("idle");

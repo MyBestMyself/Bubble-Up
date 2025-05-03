@@ -15,15 +15,22 @@ public class BubbleScript : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.transform.GetComponent<CrabBehavior>() != null||
-            collision.transform.GetComponent<WormBehavior>() != null||
+        if (collision.transform.GetComponent<CrabBehavior>() != null ||
+            collision.transform.GetComponent<WormBehavior>() != null ||
             collision.transform.GetComponent<PufferBehavior>() != null)
         {
-            transform.GetComponentInParent<PlayerScript>().handle_damage();
+            transform.GetComponentInParent<TestPlayerScript>().handle_damage();
         }
-        if (collision.gameObject.tag.Equals("bubble"))
+        if (collision.gameObject.GetComponent<BubblePowerupScript>() != null)
         {
-            transform.GetComponentInParent<PlayerScript>().add_bubble();
+            transform.GetComponentInParent<TestPlayerScript>().add_bubble();
+        }
+    }
+        private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.GetComponent<BubblePowerupScript>() != null)
+        {
+            transform.GetComponentInParent<TestPlayerScript>().add_bubble();
         }
     }
 }

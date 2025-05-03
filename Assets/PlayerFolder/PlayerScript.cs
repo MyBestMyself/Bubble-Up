@@ -53,6 +53,7 @@ public class PlayerScript : MonoBehaviour
 		CoyoteTimer = coyote_frames / 60.0f;
 		handle_bubble_change();
 		rb = GetComponent<Rigidbody2D>();
+		Debug.Log(rb);
 		bubble_count = max_bubble_count;
 		WalkParticles2D =  GetComponent<ParticleSystem>();
         PopParticles2D = transform.GetChild(3).GetComponent<ParticleSystem>();
@@ -149,7 +150,7 @@ public class PlayerScript : MonoBehaviour
 		handle_bubble_change();
 	}
 
-	void add_bubble() {
+	public void add_bubble() {
 		AddParticles2D.Play();// = true;
 		bubble_count += 1;
 		if (bubble_count > 3) {
@@ -160,8 +161,8 @@ public class PlayerScript : MonoBehaviour
 	}
 	void handle_input(float delta) {
 		float direction = Input.GetAxis("Horizontal");
-		if (direction != 0 && !invulnerable && !dead) rb.linearVelocityX = lerp(rb.linearVelocityX, direction * speed, acceleration * delta);
-		else rb.linearVelocityX = lerp(rb.linearVelocityX, 0.0f, friction * delta);
+		if (direction != 0 && !invulnerable && !dead) rb.linearVelocityX = lerp(rb.linearVelocityX, direction * speed, acceleration * Time.deltaTime);
+		else rb.linearVelocityX = lerp(rb.linearVelocityX, 0.0f, friction * Time.deltaTime);
 		if (Input.GetKeyDown(KeyCode.B))
 			pop_bubble();
 		if (Input.GetKeyDown(KeyCode.Space) && !invulnerable && !dead) {
