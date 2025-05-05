@@ -42,6 +42,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Player
+    uniqueID: 3535281687
+    locked: 0
   - name: Bubble
     uniqueID: 3923060843
     locked: 0

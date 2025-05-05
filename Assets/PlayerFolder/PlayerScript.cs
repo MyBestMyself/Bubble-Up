@@ -19,7 +19,7 @@ public class PlayerScript : MonoBehaviour
 	bool dead = false;
 	int jump_count = 0;
 
-	/*var gravity = base_gravity*/
+	float gravity = 12;
 	float max_fall_speed = -10;
 	int coyote_frames = 5;
 	bool coyote = false;
@@ -47,13 +47,13 @@ public class PlayerScript : MonoBehaviour
     ParticleSystem AddParticles2D;
     ParticleSystem WalkParticles2D;
     ParticleSystem JumpParticles2D;
-	
-    
+
+	bool usingRb=true;
     void Start() {
-		CoyoteTimer = coyote_frames / 60.0f;
+		CoyoteTimer = coyote_frames/60.0f;
 		handle_bubble_change();
 		rb = GetComponent<Rigidbody2D>();
-		Debug.Log(rb);
+		Debug.Log(rb == null);
 		bubble_count = max_bubble_count;
 		WalkParticles2D =  GetComponent<ParticleSystem>();
         PopParticles2D = transform.GetChild(3).GetComponent<ParticleSystem>();
@@ -73,11 +73,14 @@ public class PlayerScript : MonoBehaviour
 			c.gameObject.GetComponent<SpriteRenderer>().enabled = false;
 			// c.gameObject.GetComponent<SpriteRenderer>().enabled = false;	//Replace this with the solution for back/front
 		}
-		collision_shapes[bubble_count - 1].enabled = true;
-		BubbleBackSprite2D = collision_shapes[bubble_count - 1].gameObject.GetComponent<SpriteRenderer>();
-		BubbleFrontSprite2D = collision_shapes[bubble_count - 1].gameObject.GetComponent<SpriteRenderer>();
-		BubbleBackSprite2D.enabled = true;
-		BubbleFrontSprite2D.enabled = true;
+		if (bubble_count > 0)
+		{
+			collision_shapes[bubble_count - 1].enabled = true;
+			BubbleBackSprite2D = collision_shapes[bubble_count - 1].gameObject.GetComponent<SpriteRenderer>();
+			BubbleFrontSprite2D = collision_shapes[bubble_count - 1].gameObject.GetComponent<SpriteRenderer>();
+			BubbleBackSprite2D.enabled = true;
+			BubbleFrontSprite2D.enabled = true;
+		}
 	}
     void Update()
     {
@@ -141,7 +144,7 @@ public class PlayerScript : MonoBehaviour
 		}
 	}
 	void pop_bubble() {
-		PopParticles2D.Play();// = true;
+		//PopParticles2D.Play();
 		bubble_count -= 1;
 		if (bubble_count < 1) {
 			bubble_count = 0;
@@ -161,14 +164,15 @@ public class PlayerScript : MonoBehaviour
 	}
 	void handle_input(float delta) {
 		float direction = Input.GetAxis("Horizontal");
-		if (direction != 0 && !invulnerable && !dead) rb.linearVelocityX = lerp(rb.linearVelocityX, direction * speed, acceleration * Time.deltaTime);
+		if (direction != 0 && !invulnerable && !dead) rb.linearVelocityX = lerp(rb.linearVelocityX, direction * speed, acceleration * delta);
 		else rb.linearVelocityX = lerp(rb.linearVelocityX, 0.0f, friction * Time.deltaTime);
 		if (Input.GetKeyDown(KeyCode.B))
 			pop_bubble();
 		if (Input.GetKeyDown(KeyCode.Space) && !invulnerable && !dead) {
+			Debug.Log("JUMP"+jump_count);
 			if (is_on_floor() || coyote) {
 				rb.linearVelocityY = jump_speed;
-				jump_count = jump_count + 1;
+				jump_count++;
 				jumping = true;
 				stretch = true;
 				JumpParticles2D.Play(); //= true;
@@ -177,16 +181,23 @@ public class PlayerScript : MonoBehaviour
 			else if (jump_count < 2) {
 				rb.linearVelocityY = jump_speed;
 				pop_bubble();
-				jump_count = jump_count + 1;
+				jump_count++;
 				stretch = true;
 				JumpParticles2D.Play();// = true;
 				JumpSound.Play();
 			}
 		}
-		if (!Input.GetButton("Jump") && jumping) rb.gravityScale = base_gravity * 2.5f;
-		else rb.gravityScale = base_gravity;
+		if (!Input.GetButton("Jump") && jumping)
+		{
+			rb.gravityScale = base_gravity * 2.5f;
+			gravity = base_gravity * 2.5f;
+		}
+		else
+		{
+			gravity = base_gravity;
+			rb.gravityScale = base_gravity;
+		}
 		if (!Input.GetKeyDown(KeyCode.Space) && is_on_floor() && jumping) {
-			Debug.Log("Jumping is now false");
 			jumping = false;
 			jump_count = 0;
 			squash = true;
@@ -197,20 +208,20 @@ public class PlayerScript : MonoBehaviour
 		last_floor = is_on_floor();
 	}
 void handle_animation(float delta) {
-	WalkParticles2D.Stop();// = false;
+    if (Input.GetAxis("Horizontal") == 0f)
+    {
+        WalkParticles2D.Stop();
+    }
 	if (rb.linearVelocityX > 0 && !dead && !invulnerable) { 
 		PlayerSprite.flipX = false;
 		BubbleBackSprite2D.flipX = false;
 		BubbleFrontSprite2D.flipX = false;
 	}
-
-
 	if (rb.linearVelocityX < 0 && !dead && !invulnerable) {
 		PlayerSprite.flipX = true;
 		BubbleBackSprite2D.flipX = true;
 		BubbleFrontSprite2D.flipX = true;
 	}
-
 	if (invulnerable) AnimatedSprite2D.Play("damage");
 	else if (dead) AnimatedSprite2D.Play("dead");
 	else if (is_on_floor() && !jumping) {
@@ -230,14 +241,11 @@ void handle_animation(float delta) {
 			stretch = false;
 		}
 	}
-
 	if (stretch) {
 		PlayerSprite.GetComponent<Transform>().localScale = new Vector3(0.9f, 1.1f, 1);
 		BubbleBackSprite2D.GetComponent<Transform>().localScale = new Vector3(0.9f, 1.1f, 1);
 		BubbleFrontSprite2D.GetComponent<Transform>().localScale = new Vector3(0.9f, 1.1f, 1);
 		}
-
-
 	if (squash) {
 		PlayerSprite.GetComponent<Transform>().localScale = new Vector3(1.3f, 0.9f,1f);
 		BubbleBackSprite2D.GetComponent<Transform>().localScale = new Vector3(1.3f, 0.9f,1f);
@@ -261,15 +269,20 @@ void handle_animation(float delta) {
         BubbleBackSprite2D.GetComponent<Transform>().localScale = moveToOne(BubbleBackSpriteScale.x, BubbleBackSpriteScale.y);
         BubbleFrontSprite2D.GetComponent<Transform>().localScale = moveToOne(BubbleFrontSpriteScale.x, BubbleFrontSpriteScale.y);
 		PlayerSprite.GetComponent<Transform>().localScale = moveToOne(PlayerSpriteScale.x, PlayerSpriteScale.y);
+		transform.position = new Vector3(transform.position.x, transform.position.y - 0.1f, transform.position.z);
     }
 	void _physics_process(float delta) {
-		/*velocity.y += gravity * delta
-	velocity.y = min(velocity.y, max_fall_speed)
-	handle_input(delta)
-	move_and_slide()
-	handle_animation(delta)*/
-		rb.linearVelocityY = Mathf.Max(rb.linearVelocityY, max_fall_speed);
-	}
+        if (!usingRb)
+            rb.linearVelocityY += gravity * delta;
+        rb.linearVelocityY = Mathf.Max(rb.linearVelocityY, max_fall_speed);
+        if (!usingRb)
+        {
+            transform.position = new Vector3(
+                transform.position.x + rb.linearVelocityX * Time.deltaTime,
+                transform.position.y + rb.linearVelocityY * Time.deltaTime,
+                transform.position.z);
+        }
+    }
 void _on_coyote_timer_timeout() {
 	coyote = false;
 }
@@ -284,7 +297,6 @@ void _on_death_timer_timeout() {
 	}
 float lerp(float a, float b, float p)
 	{
-		Debug.Log(a + (b - a) * p);
 		return a + (b - a) * p;
 	}
 	bool is_on_floor()

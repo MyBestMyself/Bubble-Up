@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SocialPlatforms;
 using System.Timers;
 using Unity.VisualScripting;
+using System;
 
 public class TestPlayerScript : MonoBehaviour
 {
@@ -22,11 +23,11 @@ public class TestPlayerScript : MonoBehaviour
 	/*var gravity = base_gravity*/
 	float max_fall_speed = -10;
 	int coyote_frames = 5;
-	bool coyote = false;
+	//bool coyote = false;
 	bool last_floor = false;
 
 	[SerializeField] Collider2D[] collision_shapes = new Collider2D[3];
-	bool invulnerable = false;
+	//bool invulnerable = false;
 	bool stretch = false;
 	bool squash = false;
 	//Components added to replace children
@@ -35,7 +36,7 @@ public class TestPlayerScript : MonoBehaviour
 	bool death = false;
 	bool damage = false;
     float DeathTimer = 1.5f;
-    float DamageTimer = 1f;
+    float DamageTimer = 0f;
     [SerializeField] AudioSource PopSound;
     [SerializeField] AudioSource GameOverSound;
 	[SerializeField] AudioSource JumpSound;
@@ -53,7 +54,7 @@ public class TestPlayerScript : MonoBehaviour
 		CoyoteTimer = coyote_frames / 60.0f;
 		handle_bubble_change();
 		rb = GetComponent<Rigidbody2D>();
-		bubble_count = max_bubble_count;
+        bubble_count = max_bubble_count;
 		WalkParticles2D =  gameObject.GetComponent<ParticleSystem>();
         PopParticles2D = transform.GetChild(3).GetComponent<ParticleSystem>();
         AddParticles2D = transform.GetChild(4).GetComponent<ParticleSystem>();
@@ -64,7 +65,7 @@ public class TestPlayerScript : MonoBehaviour
         collision_shapes[2] = transform.GetChild(2).GetComponent<CircleCollider2D>();
 		AnimatedSprite2D = GetComponent<Animator>();
     }
-	void handle_bubble_change() {
+	public void handle_bubble_change() {
 		//Global.bubble_count = bubble_count;
 		PopSound.Play();
 		foreach(Collider2D c in collision_shapes){
@@ -84,7 +85,7 @@ public class TestPlayerScript : MonoBehaviour
         handle_animation(Time.deltaTime);
 		_physics_process(Time.deltaTime);
 		//I've decided to do timers manually
-		if (CoyoteTimer > 0&&coyote)
+		if (Coyote())
 		{
 			CoyoteTimer -= Time.deltaTime;
 			if (CoyoteTimer <= 0)
@@ -97,10 +98,9 @@ public class TestPlayerScript : MonoBehaviour
 			if (DeathTimer <= 0)
 			{
 				_on_death_timer_timeout();
-				DeathTimer = 1.5f;
 			}
         }
-		if (DamageTimer > 0&&damage) {
+		if (Invulnerable()&&damage) {
 			DamageTimer -= Time.deltaTime;
 			if (DamageTimer <= 0)
 			{
@@ -122,14 +122,15 @@ public class TestPlayerScript : MonoBehaviour
 		}
 
 	public void handle_damage() {
-		if (invulnerable) return;
+		if (Invulnerable()) return;
 		squash = true;
 		if (bubble_count > 1) {
 			pop_bubble();
-			invulnerable = true;
+			//invulnerable = true;
             rb.linearVelocityY = jump_speed * 0.5f;
 			if (rb.linearVelocityX > 0) rb.linearVelocityX = -speed * 1f;
 			else rb.linearVelocityX = speed * 1f;
+			DamageTimer = 1f;
 			damage=true;
 		}
 		else {
@@ -139,7 +140,7 @@ public class TestPlayerScript : MonoBehaviour
 			handle_death();
 		}
 	}
-	void pop_bubble() {
+	public void pop_bubble() {
 		Debug.Log("Pop bubble called");
 		PopParticles2D.Play();// = true;
 		bubble_count -= 1;
@@ -161,12 +162,13 @@ public class TestPlayerScript : MonoBehaviour
 	}
 	void handle_input(float delta) {
 		float direction = Input.GetAxis("Horizontal");
-		if (direction != 0 && !invulnerable && !dead) rb.linearVelocityX = lerp(rb.linearVelocityX, direction * speed, acceleration * delta);
+		if (direction != 0 && !Invulnerable() && !dead) rb.linearVelocityX = lerp(rb.linearVelocityX, direction * speed, acceleration * delta);
 		else rb.linearVelocityX = lerp(rb.linearVelocityX, 0.0f, friction * delta);
 		if (Input.GetKeyDown(KeyCode.B))
 			pop_bubble();
-		if (Input.GetKeyDown(KeyCode.Space) && !invulnerable && !dead) {
-			if (is_on_floor() || coyote) {
+		if (Input.GetKeyDown(KeyCode.Space) && !Invulnerable() && !dead) {
+            Debug.Log("JUMP" + jump_count);
+            if (is_on_floor() || Coyote()) {
 				rb.linearVelocityY = jump_speed;
 				jump_count = jump_count + 1;
 				jumping = true;
@@ -186,13 +188,13 @@ public class TestPlayerScript : MonoBehaviour
 		if (!Input.GetButton("Jump") && jumping) rb.gravityScale = base_gravity * 2.5f;
 		else rb.gravityScale = base_gravity;
 		if (!Input.GetKeyDown(KeyCode.Space) && is_on_floor() && jumping) {
-			jumping = false;
+			jumping = false; 
 			jump_count = 0;
 			squash = true;
 		}
 		if (!is_on_floor() && last_floor && !jumping) {
-			coyote = true; 
-		}
+            CoyoteTimer = coyote_frames / 60.0f;
+        }
 		last_floor = is_on_floor();
 	}
 void handle_animation(float delta) {
@@ -200,20 +202,20 @@ void handle_animation(float delta) {
 			WalkParticles2D.Stop();// = true;
 		}
 	// WalkParticles2D.Stop();// = false;
-	if (rb.linearVelocityX > 0 && !dead && !invulnerable) { 
+	if (rb.linearVelocityX > 0 && !dead && !Invulnerable()) { 
 		PlayerSprite.flipX = false;
 		BubbleBackSprite2D.flipX = false;
 		BubbleFrontSprite2D.flipX = false;
 	}
 
 
-	if (rb.linearVelocityX < 0 && !dead && !invulnerable) {
+	if (rb.linearVelocityX < 0 && !dead && !Invulnerable()) {
 		PlayerSprite.flipX = true;
 		BubbleBackSprite2D.flipX = true;
 		BubbleFrontSprite2D.flipX = true;
 	}
 
-	if (invulnerable) AnimatedSprite2D.Play("damage");
+	if (Invulnerable()) AnimatedSprite2D.Play("damage");
 	else if (dead) AnimatedSprite2D.Play("dead");
 	else if (is_on_floor()) {	// && !jumping
 		if (Input.GetAxis("Horizontal") != 0f) {
@@ -273,11 +275,12 @@ void handle_animation(float delta) {
 		rb.linearVelocityY = Mathf.Max(rb.linearVelocityY, max_fall_speed);
 	}
 void _on_coyote_timer_timeout() {
-	coyote = false;
+	
 }
 
 void _on_damage_timer_timeout() {
-	invulnerable = false;
+	//invulnerable = false;
+		DamageTimer = 1f;
 }
 
 void _on_death_timer_timeout() { 
@@ -302,4 +305,12 @@ float lerp(float a, float b, float p)
         else y = 1;
 		return new Vector2(x, y);
     }
+	bool Coyote()
+	{
+		return CoyoteTimer > 0f;
+	}
+	bool Invulnerable()
+	{
+		return DamageTimer > 0f;
+	}
 }
