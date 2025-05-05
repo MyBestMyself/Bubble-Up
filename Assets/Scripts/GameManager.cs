@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
+    int currentLevel = 1;
 
     void Awake()
     {
@@ -29,5 +30,14 @@ public class GameManager : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
+    }
+
+    public void NextLevel(){
+        currentLevel++;
+        if(currentLevel > 3){
+            Debug.Log("WIN GOES HERE AAAAAAA");    
+        }
+
+        SceneManager.LoadScene(sceneName:"level"+currentLevel);
     }
 }
