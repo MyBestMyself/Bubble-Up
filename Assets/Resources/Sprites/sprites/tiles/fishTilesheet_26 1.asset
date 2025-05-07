@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: fishTilesheet_23
+  m_Name: fishTilesheet_26 1
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: -3655420668637452117, guid: 79300c28b7662a040acc1c9c73fcb0d7, type: 3}
+  m_Sprite: {fileID: 7657311430061715269, guid: 79300c28b7662a040acc1c9c73fcb0d7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1
