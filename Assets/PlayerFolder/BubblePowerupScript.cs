@@ -2,11 +2,12 @@ using UnityEngine;
 
 public class BubblePowerupScript : MonoBehaviour
 {
-    private void OnTriggerEnter(Collider other)
+    void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.GetComponent<BubblePowerupScript>() != null)
+        Debug.Log("collide");
+        if (other.gameObject.GetComponentInParent<TestPlayerScript>() != null)
         {
-            transform.GetComponentInParent<TestPlayerScript>().add_bubble();
+            other.gameObject.GetComponentInParent<TestPlayerScript>().add_bubble();
             Destroy(gameObject);
             Destroy(this);
         }
