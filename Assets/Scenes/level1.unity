@@ -10388,6 +10388,10 @@ PrefabInstance:
       propertyPath: JumpSound
       value: 
       objectReference: {fileID: 1606180125}
+    - target: {fileID: 366099478006829719, guid: 38c2eea86f01bc34e89dd4e24daa1361, type: 3}
+      propertyPath: bubble_count
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 642386860385945066, guid: 38c2eea86f01bc34e89dd4e24daa1361, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
