@@ -33,9 +33,7 @@ public class TestPlayerScript : MonoBehaviour
 	//Components added to replace children
 	Rigidbody2D rb;
 	float CoyoteTimer;
-	bool death = false;
-	bool damage = false;
-    float DeathTimer = 1.5f;
+    float DeathTimer = 0f;
     float DamageTimer = 0f;
     [SerializeField] AudioSource PopSound;
     [SerializeField] AudioSource GameOverSound;
@@ -93,19 +91,18 @@ public class TestPlayerScript : MonoBehaviour
 				_on_coyote_timer_timeout();
 			}
 		}
-		if (DeathTimer > 0&&death) { 
+		if (DeathTimer > 0) { 
 			DeathTimer -= Time.deltaTime;
 			if (DeathTimer <= 0)
 			{
 				_on_death_timer_timeout();
 			}
         }
-		if (Invulnerable()&&damage) {
+		if (Invulnerable()) {
 			DamageTimer -= Time.deltaTime;
 			if (DamageTimer <= 0)
 			{
 				_on_damage_timer_timeout();
-				DamageTimer = 1f;
 			}
         }
     }
@@ -131,7 +128,6 @@ public class TestPlayerScript : MonoBehaviour
 			if (rb.linearVelocityX > 0) rb.linearVelocityX = -speed * 1f;
 			else rb.linearVelocityX = speed * 1f;
 			DamageTimer = 1f;
-			damage=true;
 		}
 		else {
 			rb.linearVelocityY = jump_speed;
@@ -163,7 +159,8 @@ public class TestPlayerScript : MonoBehaviour
 	void handle_input(float delta) {
 		float direction = Input.GetAxis("Horizontal");
 		if (direction != 0 && !Invulnerable() && !dead) rb.linearVelocityX = lerp(rb.linearVelocityX, direction * speed, acceleration * delta);
-		else rb.linearVelocityX = lerp(rb.linearVelocityX, 0.0f, friction * delta);
+		else rb.linearVelocityX = lerp
+				(rb.linearVelocityX, 0.0f, friction * delta);
 		if (Input.GetKeyDown(KeyCode.B))
 			pop_bubble();
 		if (Input.GetKeyDown(KeyCode.Space) && !Invulnerable() && !dead) {
@@ -279,8 +276,7 @@ void _on_coyote_timer_timeout() {
 }
 
 void _on_damage_timer_timeout() {
-	//invulnerable = false;
-		DamageTimer = 1f;
+	
 }
 
 void _on_death_timer_timeout() { 
@@ -313,4 +309,8 @@ float lerp(float a, float b, float p)
 	{
 		return DamageTimer > 0f;
 	}
+	bool DeathTimerRunning()
+	{
+        return DeathTimer > 0f;
+    }
 }
