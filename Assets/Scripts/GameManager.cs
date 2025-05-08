@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem.Controls;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
@@ -27,6 +28,10 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(sceneName: "howto");
     }
 
+    public void Retry()
+    {
+        SceneManager.LoadScene(sceneName: "level" + currentLevel);
+    }
     public void QuitGame()
     {
         Application.Quit();
@@ -35,9 +40,10 @@ public class GameManager : MonoBehaviour
     public void NextLevel(){
         currentLevel++;
         if(currentLevel > 3){
-            Debug.Log("WIN GOES HERE AAAAAAA");    
+            SceneManager.LoadScene(sceneName:"congratulations");  
         }
-
-        SceneManager.LoadScene(sceneName:"level"+currentLevel);
+        else{
+            SceneManager.LoadScene(sceneName:"level"+currentLevel);
+        }
     }
 }
