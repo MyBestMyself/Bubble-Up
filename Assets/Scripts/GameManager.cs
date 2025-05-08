@@ -40,9 +40,10 @@ public class GameManager : MonoBehaviour
     public void NextLevel(){
         currentLevel++;
         if(currentLevel > 3){
-            Debug.Log("WIN GOES HERE AAAAAAA");    
+            SceneManager.LoadScene(sceneName:"congratulations");  
         }
-
-        SceneManager.LoadScene(sceneName:"level"+currentLevel);
+        else{
+            SceneManager.LoadScene(sceneName:"level"+currentLevel);
+        }
     }
 }

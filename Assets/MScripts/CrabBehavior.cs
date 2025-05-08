@@ -32,22 +32,12 @@ public class CrabBehavior : MonoBehaviour
         }
 
         RaycastHit2D hit = Physics2D.Raycast(new Vector2(rayX, coll.bounds.min.y), -Vector2.up, 0.5f, layerMask);
-        Debug.DrawRay(new Vector2(rayX, coll.bounds.min.y), -Vector2.up * 0.5f, Color.red, 5f);
         if(hit.collider == null){
             if(canFlip){
                 Flip();
                 StartCoroutine("WaitForFlip");
                 canFlip = true;
                 
-                // if(canMove){
-                    // Debug.Log("Particles play???");
-                    // if(flipped){
-                    //     particlesFlipped.Play();
-                    // }
-                    // else{
-                    //     particles.Play();
-                    // }
-                // }
             }
         }
 
