@@ -10382,15 +10382,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 103890012123811779, guid: 38c2eea86f01bc34e89dd4e24daa1361, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.8
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 366099478006829719, guid: 38c2eea86f01bc34e89dd4e24daa1361, type: 3}
       propertyPath: JumpSound
       value: 
       objectReference: {fileID: 1606180125}
     - target: {fileID: 366099478006829719, guid: 38c2eea86f01bc34e89dd4e24daa1361, type: 3}
+      propertyPath: jump_speed
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 366099478006829719, guid: 38c2eea86f01bc34e89dd4e24daa1361, type: 3}
+      propertyPath: base_gravity
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 366099478006829719, guid: 38c2eea86f01bc34e89dd4e24daa1361, type: 3}
       propertyPath: bubble_count
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 582455084933696443, guid: 38c2eea86f01bc34e89dd4e24daa1361, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 642386860385945066, guid: 38c2eea86f01bc34e89dd4e24daa1361, type: 3}
       propertyPath: m_LocalPosition.x
@@ -10432,6 +10444,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2208671345960993975, guid: 38c2eea86f01bc34e89dd4e24daa1361, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3582673305958568993, guid: 38c2eea86f01bc34e89dd4e24daa1361, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4501134007964550275, guid: 38c2eea86f01bc34e89dd4e24daa1361, type: 3}
       propertyPath: m_LocalScale.x
       value: 1.01454
@@ -10454,7 +10474,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4789196431427506050, guid: 38c2eea86f01bc34e89dd4e24daa1361, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5840700728318932146, guid: 38c2eea86f01bc34e89dd4e24daa1361, type: 3}
       propertyPath: m_LocalScale.x
@@ -10466,11 +10486,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5840700728318932146, guid: 38c2eea86f01bc34e89dd4e24daa1361, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.4
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 5871413481363019267, guid: 38c2eea86f01bc34e89dd4e24daa1361, type: 3}
       propertyPath: m_Name
       value: MakenaPlayer
+      objectReference: {fileID: 0}
+    - target: {fileID: 7166609447905491432, guid: 38c2eea86f01bc34e89dd4e24daa1361, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

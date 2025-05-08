@@ -15,7 +15,7 @@ public class TestPlayerScript : MonoBehaviour
 	public float base_gravity = 12;
 	public int max_bubble_count = 3;
 	//There's something about a global bubble count idk
-	public int bubble_count;
+	public int bubble_count=2;
 	bool jumping = false;
 	bool dead = false;
 	int jump_count = 0;
@@ -52,7 +52,6 @@ public class TestPlayerScript : MonoBehaviour
 		CoyoteTimer = coyote_frames / 60.0f;
 		handle_bubble_change();
 		rb = GetComponent<Rigidbody2D>();
-        bubble_count = max_bubble_count;
 		WalkParticles2D =  gameObject.GetComponent<ParticleSystem>();
         PopParticles2D = transform.GetChild(3).GetComponent<ParticleSystem>();
         AddParticles2D = transform.GetChild(4).GetComponent<ParticleSystem>();
@@ -234,15 +233,15 @@ void handle_animation(float delta) {
 
 	if (stretch) {
 		PlayerSprite.GetComponent<Transform>().localScale = new Vector3(0.9f, 1.1f, 1);
-		BubbleBackSprite2D.GetComponent<Transform>().localScale = new Vector3(0.9f, 1.1f, 1);
-		BubbleFrontSprite2D.GetComponent<Transform>().localScale = new Vector3(0.9f, 1.1f, 1);
+		BubbleBackSprite2D.GetComponent<Transform>().localScale = new Vector3(1/0.9f, 1/1.1f, 1);
+		BubbleFrontSprite2D.GetComponent<Transform>().localScale = new Vector3(1/0.9f, 1/1.1f, 1);
 		}
 
 
 	if (squash) {
 		PlayerSprite.GetComponent<Transform>().localScale = new Vector3(1.3f, 0.9f,1f);
-		BubbleBackSprite2D.GetComponent<Transform>().localScale = new Vector3(1.3f, 0.9f,1f);
-		BubbleFrontSprite2D.GetComponent<Transform>().localScale = new Vector3(1.3f, 0.9f,1f);
+		BubbleBackSprite2D.GetComponent<Transform>().localScale = new Vector3(1/1.3f, 1/0.9f,1f);
+		BubbleFrontSprite2D.GetComponent<Transform>().localScale = new Vector3(1/1.3f, 1/0.9f,1f);
 		JumpParticles2D.Play();// = true;
 		squash = false;
 		}
